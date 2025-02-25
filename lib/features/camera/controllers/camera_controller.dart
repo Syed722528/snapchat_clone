@@ -1,50 +1,47 @@
-// lib/features/camera/controllers/camera_controller.dart
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
 
-class CustomCameraController extends GetxController {
-  Rx<CameraController?> controller = Rx<CameraController?>(null);
-  RxList<CameraDescription> cameras = <CameraDescription>[].obs;
-  RxInt selectedCameraIndex = 0.obs;
-  Rx<FlashMode> flashMode = FlashMode.off.obs;
+class CameraControllerX extends GetxController {
+  CameraController? cameraController;
+  List<CameraDescription>? cameras;
+  var selectedCameraIndex = 0.obs;
+  var flashMode = FlashMode.off.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _initializeCamera();
+    initializeCamera();
   }
 
-  Future<void> _initializeCamera() async {
-    cameras.value = await availableCameras();
-    if (cameras.isNotEmpty) {
-      controller.value = CameraController(
-        cameras[selectedCameraIndex.value],
+  Future<void> initializeCamera() async {
+    cameras = await availableCameras();
+    if (cameras!.isNotEmpty) {
+      cameraController = CameraController(
+        cameras![selectedCameraIndex.value],
         ResolutionPreset.max,
-        imageFormatGroup: ImageFormatGroup.bgra8888,
       );
-      await controller.value!.initialize();
-      update(); // Notify GetX to rebuild UI
-    }
-  }
-
-  void switchCamera() {
-    if (cameras.length > 1) {
-      selectedCameraIndex.value = (selectedCameraIndex.value + 1) % cameras.length;
-      _initializeCamera();
-    }
-  }
-
-  void toggleFlash() {
-    if (controller.value != null && controller.value!.value.isInitialized) {
-      flashMode.value = flashMode.value == FlashMode.off ? FlashMode.torch : FlashMode.off;
-      controller.value!.setFlashMode(flashMode.value);
+      await cameraController!.initialize();
       update();
     }
   }
 
+  void switchCamera() async {
+    if (cameras!.length > 1) {
+      selectedCameraIndex.value =
+          (selectedCameraIndex.value + 1) % cameras!.length;
+      await initializeCamera();
+    }
+  }
+
+  void toggleFlash() async {
+    flashMode.value =
+        flashMode.value == FlashMode.off ? FlashMode.torch : FlashMode.off;
+    await cameraController!.setFlashMode(flashMode.value);
+  }
+
   @override
   void onClose() {
-    controller.value?.dispose();
+    cameraController?.dispose();
     super.onClose();
   }
 }
