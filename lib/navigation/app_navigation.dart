@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:snapchat_clone/features/camera/screens/camera_screen.dart';
+import 'package:snapchat_clone/core/common_widgets/app_bar.dart';
+import 'package:snapchat_clone/core/constants/app_colors.dart';
 import 'package:snapchat_clone/navigation/navigation_controller.dart';
 
 class AppNavigation extends StatelessWidget {
@@ -8,25 +9,37 @@ class AppNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> selectedIconColors = [
-      Colors.green,
-      Colors.blue,
-      Colors.yellow,
-      Colors.purpleAccent,
-      Colors.red,
-    ];
     final navigationController = Get.put(NavigationController());
-    List<Widget> body = [CameraScreen()];
-    return Scaffold(
-      body: body[0],
-      bottomNavigationBar: Obx(() {
-        return BottomNavigationBar(
+    List<PreferredSizeWidget?> appBars = [
+      null,
+
+      buildAppBar(
+        IconButton(onPressed: () {}, icon: Icon(Icons.mark_chat_read_outlined),),
+        'Text',
+        AppColors.appBlack,
+      ),
+      null,
+      buildAppBar(
+        IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded)),
+        'Stories ',
+        Colors.black,
+      ),
+      null,
+    ];
+    return Obx(() {
+      return Scaffold(
+        backgroundColor: AppColors.appWhite,
+        appBar: appBars[navigationController.index.value],
+        body: navigationController.body[navigationController.index.value],
+        bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.black,
           unselectedItemColor: Colors.grey,
           showUnselectedLabels: false,
           selectedItemColor:
-              selectedIconColors[navigationController.index.value],
+              AppColors.selectedNavigationBarItemColor[navigationController
+                  .index
+                  .value],
           currentIndex: navigationController.index.value,
           onTap: (value) => navigationController.updateIndex(value),
           iconSize: 27,
@@ -49,8 +62,8 @@ class AppNavigation extends StatelessWidget {
               label: '▲',
             ),
           ],
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }

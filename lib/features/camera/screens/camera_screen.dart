@@ -31,24 +31,28 @@ class CameraScreen extends StatelessWidget {
                   child: CameraPreview(controller.cameraController!),
                 ),
                 buildTopBar(controller),
-                Positioned(
-                  bottom: 80,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.file_copy_outlined, size: 35),
-
-                      Icon(Icons.circle_outlined, size: 120),
-
-                      Icon(Icons.emoji_emotions, size: 35),
-                    ],
-                  ),
-                ),
+                buildBottomToolBar(),
               ],
             );
       },
+    );
+  }
+
+  Positioned buildBottomToolBar() {
+    return Positioned(
+      bottom: 80,
+      left: 0,
+      right: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.file_copy_outlined, size: 35),
+
+          Icon(Icons.circle_outlined, size: 120),
+
+          Icon(Icons.emoji_emotions, size: 35),
+        ],
+      ),
     );
   }
 
@@ -119,4 +123,6 @@ class CameraScreen extends StatelessWidget {
       ),
     );
   }
+
+
 }
