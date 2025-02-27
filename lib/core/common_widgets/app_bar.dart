@@ -8,15 +8,25 @@ PreferredSizeWidget buildAppBar(
 ) {
   return AppBar(
     backgroundColor: Colors.transparent,
+    automaticallyImplyLeading: false,
+
     iconTheme: IconThemeData(color: iconColor),
-    leading: Row(
+    title: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(child: SvgPicture.asset('assets/icons/emoji.svg')),
-        Expanded(child: SvgPicture.asset('assets/icons/Search.svg')),
+        Image.asset('assets/images/bitmoji.png', height: 45, width: 45),
+        SvgPicture.asset('assets/icons/Search.svg'),
+        Expanded(
+          child: Center(
+            child: Text(title, style: TextStyle(fontWeight: FontWeight.w400)),
+          ),
+        ),
       ],
     ),
+
     actions: [SvgPicture.asset('assets/icons/Friend add.svg'), button],
-    title: Text(title),
+
     centerTitle: true,
   );
 }

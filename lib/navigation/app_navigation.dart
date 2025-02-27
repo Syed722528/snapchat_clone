@@ -14,13 +14,25 @@ class AppNavigation extends StatelessWidget {
       null,
 
       buildAppBar(
-        IconButton(onPressed: () {}, icon: Icon(Icons.mark_chat_read_outlined),),
-        'Text',
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.mark_chat_read_outlined),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(AppColors.appGrey),
+          ),
+        ),
+        'Chat',
         AppColors.appBlack,
       ),
       null,
       buildAppBar(
-        IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz_rounded)),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.more_horiz_rounded),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(AppColors.appGrey),
+          ),
+        ),
         'Stories ',
         Colors.black,
       ),
@@ -56,7 +68,7 @@ class AppNavigation extends StatelessWidget {
               icon: Icon(Icons.camera_alt_sharp),
               label: '▲',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.people), label: '🢑'),
+            BottomNavigationBarItem(icon: Icon(Icons.people), label: '▲'),
             BottomNavigationBarItem(
               icon: Icon(Icons.play_arrow_outlined),
               label: '▲',

@@ -44,6 +44,7 @@ class ChatScreen extends StatelessWidget {
                   leading: CircleAvatar(
                     radius: 20,
                     backgroundColor: AppColors.appGrey,
+                    backgroundImage: AssetImage('assets/images/bitmoji.png'),
                   ),
                   title: Text('Name'),
                   subtitle: Row(
@@ -51,8 +52,8 @@ class ChatScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.indeterminate_check_box, size: 10),
-                      Text('New Snap', style: TextStyle(fontSize: 12)),
+                      Icon(Icons.send, size: 10, color: Colors.red),
+                      Text('Deleivered', style: TextStyle(fontSize: 12)),
                       Text('- 2m', style: TextStyle(fontSize: 10)),
                       Text('- 178🔥', style: TextStyle(fontSize: 12)),
                     ],
