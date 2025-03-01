@@ -16,94 +16,117 @@ class VideoScreen extends StatelessWidget {
         onTap: () {
           controller.togglePlayPause();
         },
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            GetBuilder<VideoController>(
-              builder: (controller) {
-                return PageView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: controller.videoUrls.length,
-                  onPageChanged: controller.onPageChanged,
-                  itemBuilder: (context, index) {
-                    return Obx(() {
-                      if (index == controller.currentIndex.value &&
-                          controller.currentController.value != null &&
-                          controller
-                              .currentController
-                              .value!
-                              .value
-                              .isInitialized) {
-                        return AspectRatio(
-                          aspectRatio:
-                              controller
-                                  .currentController
-                                  .value!
-                                  .value
-                                  .aspectRatio,
-                          child: VideoPlayer(
-                            controller.currentController.value!,
+        child: GetBuilder<VideoController>(
+          builder: (controller) {
+            return PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: controller.videoUrls.length,
+              onPageChanged: controller.onPageChanged,
+              itemBuilder: (context, index) {
+                return Obx(() {
+                  if (index == controller.currentIndex.value &&
+                      controller.currentController.value != null &&
+                      controller.currentController.value!.value.isInitialized) {
+                    return Stack(
+                      fit: StackFit.expand,
+
+                      children: [
+                        SizedBox.expand(
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: SizedBox(
+                              width:
+                                  controller
+                                      .currentController
+                                      .value!
+                                      .value
+                                      .size
+                                      .width,
+                              height:
+                                  controller
+                                      .currentController
+                                      .value!
+                                      .value
+                                      .size
+                                      .height,
+                              child: VideoPlayer(
+                                controller.currentController.value!,
+                              ),
+                            ),
                           ),
-                        );
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    });
-                  },
-                );
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          right: 10,
+                          child: Column(
+                            spacing: 10,
+
+                            children: [
+                              Obx(() {
+                                return IconButton(
+                                  onPressed: () {
+                                    controller.toggleIsliked();
+                                  },
+                                  style: customIconStyle(),
+                                  icon:
+                                      !controller.isLiked.value
+                                          ? Icon(Icons.favorite)
+                                          : Icon(
+                                            Icons.favorite,
+                                            color: Colors.red,
+                                          ),
+                                );
+                              }),
+
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.chat),
+                                style: customIconStyle(),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.send),
+                                style: customIconStyle(),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(Icons.more_horiz),
+                                style: customIconStyle(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          left: 10,
+                          bottom: 20,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '▶  256k',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Row(
+                                spacing: 10,
+                                children: [
+                                  CircleAvatar(radius: 15),
+                                  Text(
+                                    '@Syed Hassan',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
+                });
               },
-            ),
-            Positioned(
-              bottom: 10,
-              right: 10,
-              child: Column(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    style: customIconStyle(),
-                    icon:
-                        !controller.isLiked.value
-                            ? Icon(Icons.favorite)
-                            : Icon(Icons.favorite, color: Colors.red),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.chat),
-                    style: customIconStyle(),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.send),
-                    style: customIconStyle(),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.more_horiz),
-                    style: customIconStyle(),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 10,
-              bottom: 20,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('▶  256k', style: TextStyle(color: Colors.white)),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      CircleAvatar(radius: 15),
-                      Text(
-                        '@Syed Hassan',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

@@ -10,7 +10,7 @@ import '../core/constants/app_colors.dart';
 import '../features/camera/screens/camera_screen.dart';
 
 class NavigationController extends GetxController {
-  RxInt index = 1.obs;
+  RxInt index = 3.obs;
 
   void updateIndex(int currentIndex) {
     index.value = currentIndex;

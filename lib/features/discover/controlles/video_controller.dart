@@ -6,7 +6,9 @@ class VideoController extends GetxController {
 
   void toggleIsliked() {
     isLiked.value != isLiked.value;
+    update();
   }
+
   final RxList<String> videoUrls =
       [
         'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
