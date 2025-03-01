@@ -39,6 +39,7 @@ dependencies:
   flutter_svg:
   flutter_map: 
   latlong2: ^0.9.1
+  video_player: ^2.9.3
 
 dev_dependencies:
   flutter_test:
